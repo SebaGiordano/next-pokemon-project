@@ -6,7 +6,7 @@ import confetti from 'canvas-confetti';
 
 import { Layout } from '../../components/layouts'
 import { pokeApi } from '../../api'
-import { localFavorites } from '../../utils';
+import { getPokemonInfo, localFavorites } from '../../utils';
 
 
 const PokemonByNamePage = ({pokemon: {name, img, id}}) => {
@@ -114,7 +114,7 @@ export const getStaticPaths = async (ctx) => {
         paths: pokemonsNames.map( name => ({
             params: {name}
         })),
-        fallback: false
+        fallback: 'blocking'
     }
 }
 
@@ -123,19 +123,23 @@ export const getStaticProps = async ({params}) => {
     
     const {name} = params
 
-    const { data }  = await pokeApi.get(`/pokemon/${name}`)
+    const pokemon = await getPokemonInfo(name)
 
-    const pokemon = {
-        id: data.id,
-        name: data.name,
-        sprites: data.sprites
-
+    if ( !pokemon ) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
     }
   
     return {
       props: {
         pokemon: pokemon
-      }
+      },
+      // INCREMENTAL STATIC REGENERATION
+      revalidate: 86400, //60 * 60 * 24
     }
 }
 
