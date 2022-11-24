@@ -9,15 +9,15 @@ import { pokeApi } from '../../api'
 import { getPokemonInfo, localFavorites } from '../../utils';
 
 
-const PokemonPage = ({pokemon: {name, img, id}}) => {
+const PokemonPage = ({pokemon}) => {
 
     // console.log(pokemon);
 
     // ESTO ES PARA LEER Y VERIFICAR SI EXISTE EN FAVORITOS
-    const [isInFavorites, setisInFavorites] = useState(localFavorites.existInFavorites(id))
+    const [isInFavorites, setisInFavorites] = useState(localFavorites.existInFavorites(pokemon.id))
 
     const onToggleFavorite = () => {
-        localFavorites.toggleFavorite(id)
+        localFavorites.toggleFavorite(pokemon.id)
         setisInFavorites( !isInFavorites )
 
         if (isInFavorites) return
@@ -35,14 +35,14 @@ const PokemonPage = ({pokemon: {name, img, id}}) => {
     }
 
     return (
-        <Layout title={name}>
+        <Layout title={pokemon.name}>
             <Grid.Container css={{marginTop: '5px'}} gap={2}>
                 <Grid xs={12} sm={4}>
                     <Card isHoverable css={{padding: '30px'}} style={{backgroundColor: '$gradient'}}>
                         <Card.Body>
                             <Card.Image
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
-                                alt={name}
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
+                                alt={pokemon.name}
                                 width= '100%'
                                 height={200}  
                             />
@@ -53,7 +53,7 @@ const PokemonPage = ({pokemon: {name, img, id}}) => {
                 <Grid xs={12} sm={8}>
                     <Card style={{backgroundColor: '$gradient'}}>
                         <Card.Header css={{display: 'flex', justifyContent: 'space-between'}}>
-                            <Text h1 transform='capitalize'>{name}</Text>
+                            <Text h1 transform='capitalize'>{pokemon.name}</Text>
                             <Button 
                                 color="gradient" 
                                 ghost = { !isInFavorites }
@@ -68,25 +68,26 @@ const PokemonPage = ({pokemon: {name, img, id}}) => {
 
                             <Container display='flex' direction='row'>
                                 <Image
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-                                    alt={name}
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                                    alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />
                                 <Image
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${id}.png`}
-                                    alt={name}
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemon.id}.png`}
+                                    alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />
                                 <Image
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`}
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.id}.png`}
+                                    alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />
                                 <Image
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${id}.png`}
-                                    alt={name}
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${pokemon.id}.png`}
+                                    alt={pokemon.name}
                                     width={100}
                                     height={100}
                                 />

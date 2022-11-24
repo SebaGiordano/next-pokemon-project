@@ -10,7 +10,13 @@ export const getPokemonInfo = async( nameOrId) => {
         return {
             id: data.id,
             name: data.name,
-            sprites: data.sprites
+            sprites: data.sprites,
+            stats: data.stats,
+            weight: data.weight,
+            types: data.types,
+            abilities: data.abilities,
+            moves: data.moves,
+            base_experience: data.base_experience
         }
 
     } catch (error) {
